@@ -7,6 +7,7 @@ import Confetti from "react-confetti";
 function App() {
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
+  const [tries, setTries] = useState(0);
 
   useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -14,7 +15,6 @@ function App() {
     const allSameValue = dice.every((die) => die.value === firstValue);
     if (allHeld && allSameValue) {
       setTenzies(true);
-      console.log("You won!");
     }
   }, [dice]);
 
@@ -80,3 +80,8 @@ function App() {
 }
 
 export default App;
+
+/* 
+every time i click rollDice i want to add + 1 to tries state if tenzie === true and i click rollDice i want to save tries into new state call allTries and save it to local storage every time allTries is changed
+
+*/
