@@ -7,7 +7,8 @@ import Confetti from "react-confetti";
 function App() {
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
-  const [tries, setTries] = useState(0);
+  const [count, setCount] = useState(0);
+  const [allTries, setAllTries] = useState([]);
 
   useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -15,8 +16,13 @@ function App() {
     const allSameValue = dice.every((die) => die.value === firstValue);
     if (allHeld && allSameValue) {
       setTenzies(true);
+      setAllTries([...allTries, { count }]);
     }
   }, [dice]);
+
+  useEffect(() => {
+    localStorage.setItem("tries", JSON.stringify(allTries));
+  }, [allTries]);
 
   function generateNewDice() {
     return {
@@ -41,9 +47,11 @@ function App() {
           return dice.isHeld ? dice : generateNewDice();
         })
       );
+      setCount((oldCount) => oldCount + 1);
     } else {
       setTenzies(false);
       setDice(allNewDice());
+      setCount(0);
     }
   }
 
