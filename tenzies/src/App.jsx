@@ -8,7 +8,9 @@ function App() {
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
   const [count, setCount] = useState(0);
-  const [allTries, setAllTries] = useState([]);
+  const [allTries, setAllTries] = useState(() => {
+    return JSON.parse(localStorage.getItem("tries")) || [];
+  });
 
   useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -50,8 +52,8 @@ function App() {
       setCount((oldCount) => oldCount + 1);
     } else {
       setTenzies(false);
-      setDice(allNewDice());
       setCount(0);
+      setDice(allNewDice());
     }
   }
 
